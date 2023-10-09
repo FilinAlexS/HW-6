@@ -1,5 +1,4 @@
 import pytest
-
 from page_object.main_page import MainPage
 
 
@@ -9,8 +8,8 @@ def test_element_of_main_page(browser):
     main.find_input_field_search()
     main.find_logo_img()
     main.find_button_cart()
-    main.find_button_add_to_cart()
     main.find_first_element_in_featured()
+    main.find_second_button_add_to_cart_in_featured()
 
 
 @pytest.mark.parametrize('currency', ['EUR', 'GBP', 'USD'])

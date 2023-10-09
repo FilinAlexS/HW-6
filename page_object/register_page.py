@@ -1,96 +1,55 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-REGISTER_PAGE = '/index.php?route=account/register'
+from page_object.base_page import BasePage
+from page_object.elements.register_locators import RegisterLocators
 
 
-class RegisterPage:
-    PATH = REGISTER_PAGE
-
-    def __init__(self, driver):
-        self.driver = driver
+class RegisterPage(BasePage):
+    PATH = RegisterLocators.REGISTER_PAGE
 
     def open(self, url):
         self.driver.get(url + self.PATH)
 
     def find_input_field_firstname(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@name='firstname']")))
+        self.element(RegisterLocators.FIRSTNAME)
 
     def input_firstname(self, text):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='firstname']"))).click()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='firstname']"))).clear()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='firstname']"))).send_keys(text)
+        self._input(self.element(RegisterLocators.FIRSTNAME), text)
 
     def find_input_field_lastname(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@name='lastname']")))
+        self.element(RegisterLocators.LASTNAME)
 
     def input_lastname(self, text):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='lastname']"))).click()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='lastname']"))).clear()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='lastname']"))).send_keys(text)
+        self._input(self.element(RegisterLocators.LASTNAME), text)
 
     def find_input_field_password(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='input-password']")))
+        self.element(RegisterLocators.PASSWORD)
 
     def input_password(self, text):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='input-password']"))).click()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='input-password']"))).clear()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='input-password']"))).send_keys(text)
-
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='input-confirm']"))).click()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='input-confirm']"))).clear()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@id='input-confirm']"))).send_keys(text)
+        self._input(self.element(RegisterLocators.PASSWORD), text)
+        self._input(self.element(RegisterLocators.CONFIRM_PASSWORD), text)
 
     def find_input_field_email(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@name='email']")))
+        self.element(RegisterLocators.PASSWORD)
 
     def input_email(self, text):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='email']"))).click()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='email']"))).clear()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='email']"))).send_keys(text)
+        self._input(self.element(RegisterLocators.EMAIL), text)
 
     def input_telephone(self, text):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='telephone']"))).click()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='telephone']"))).clear()
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[@name='telephone']"))).send_keys(text)
+        self._input(self.element(RegisterLocators.TELEPHONE), text)
 
     def find_checkbox_agree_policy(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@name='agree']")))
+        self.element(RegisterLocators.CHECKBOX_AGREE_POLICY)
 
     def on_checkbox_agree_policy(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@name='agree']"))).click()
+        self.click(self.element(RegisterLocators.CHECKBOX_AGREE_POLICY))
 
-    def find_button_continue(self):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[contains(@type, 'submit')]")))
+    def find_button_submit(self):
+        self.element(RegisterLocators.SUBMIT)
 
     def click_submit(self):
-        WebDriverWait(self.driver, 2).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[contains(@type, 'submit')]"))).click()
+        self.click(self.element(RegisterLocators.SUBMIT))
 
     def click_continue(self):
-        WebDriverWait(self.driver, 2).until(
-            EC.visibility_of_element_located((By.XPATH, "//*/a[.='Continue']"))).click()
+        self.click(self.element(RegisterLocators.BUTTON_CONTINUE))
 
     def check_user_login(self):
-        a = self.driver.find_element(By.XPATH, "//*[@id='column-right']/*/a[.='Logout']").is_displayed()
-        return a
+        return self.is_visible_element(RegisterLocators.LOGOUT)

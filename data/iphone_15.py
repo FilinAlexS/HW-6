@@ -12,4 +12,4 @@ class Iphone15:
     QUANTITY = '5'
     MANUFACTURER = 'Apple'
     CATEGORY = 'Phones & PDAs'
-    SEO = 'iphone 15'
+    SEO = 'iphone_15'

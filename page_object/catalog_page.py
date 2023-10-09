@@ -1,34 +1,24 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
-CATALOG_PAGE = '/index.php?route=product/category&path=20'
+from page_object.base_page import BasePage
+from page_object.elements.catalog_locators import CatalogLocators
 
 
-class CatalogPage:
-    PATH = CATALOG_PAGE
-
-    def __init__(self, driver):
-        self.driver = driver
+class CatalogPage(BasePage):
+    PATH = CatalogLocators.CATALOG_PAGE
 
     def open(self, url):
         self.driver.get(url + self.PATH)
 
     def find_field_sortby(self):
-        WebDriverWait(self.driver, 1).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='input-sort']")))
+        self.element(CatalogLocators.FIELD_SORTBY)
 
     def find_icon_home(self):
-        WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_element_located((By.XPATH, "//*[contains(@class, 'fa-home')]")))
+        self.element(CatalogLocators.ICON_HOME)
 
     def find_button_list_view(self):
-        WebDriverWait(self.driver, 3).until(EC.visibility_of_element_located((By.XPATH, "//*[@id='list-view']")))
+        self.element(CatalogLocators.BUTTON_LIST_VIEW)
 
     def find_last_button_compareadd(self):
-        list_button_compareadd = WebDriverWait(self.driver, 1).until(
-            EC.visibility_of_all_elements_located((By.XPATH, "//*/button[contains(@onclick, 'compare.add')]")))
-        return list_button_compareadd[-1]
+        return self.elements(CatalogLocators.BUTTON_COMPAREADD)[-1]
 
     def check_category_cameras_in_left_menu(self):
-        WebDriverWait(self.driver, 1).until(
-            EC.text_to_be_present_in_element((By.XPATH, "//*[@id='column-left']//a[9]"), text_="Cameras"))
+        self.verify_text_in_element(CatalogLocators.CAMERAS_IN_LEFT_MENU, "Cameras")

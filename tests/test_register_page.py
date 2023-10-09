@@ -10,7 +10,7 @@ def test_element_register_page(browser):
     register.find_input_field_email()
     register.find_input_field_password()
     register.find_checkbox_agree_policy()
-    register.find_button_continue()
+    register.find_button_submit()
 
 
 def test_register_user(browser):

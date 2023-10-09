@@ -1,31 +1,26 @@
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from page_object.base_page import BasePage
+from page_object.elements.product_locators import ProductLocators
 
 
-class ProductPage:
-
-    def __init__(self, driver):
-        self.driver = driver
+class ProductPage(BasePage):
 
     def open(self, url):
         self.driver.get(url)
-        self.driver.find_element(By.XPATH, '//*[contains(@class, "image")]/a/img').click()
+
+    def go_to_product_card(self):
+        self.click(self.element(ProductLocators.PRODUCT_CARD))
 
     def find_button_add_to_card(self):
-        WebDriverWait(self.driver, 2).until(EC.visibility_of_element_located((By.XPATH, '//*[@id="button-cart"]')))
+        self.element(ProductLocators.BUTTON_ADD_TO_CARD)
 
     def find_rating(self):
-        WebDriverWait(self.driver, 2).until(
-            EC.visibility_of_element_located((By.XPATH, '//*[contains(@class, "rating")]')))
+        self.element(ProductLocators.RATING)
 
     def find_name_product(self):
-        WebDriverWait(self.driver, 2).until(EC.visibility_of_element_located((By.XPATH, '//*/h1')))
+        self.element(ProductLocators.NAME_PRODUCT)
 
     def find_button_compare(self):
-        WebDriverWait(self.driver, 2).until(
-            EC.visibility_of_element_located((By.XPATH, '//*/button[contains(@onclick, "compare.add")]')))
+        self.element(ProductLocators.BUTTON_COMPARE)
 
     def find_link_specification(self):
-        WebDriverWait(self.driver, 2).until(
-            EC.visibility_of_element_located((By.XPATH, '//a[.="Specification"]')))
+        self.element(ProductLocators.LINK_SPECIFICATION)
